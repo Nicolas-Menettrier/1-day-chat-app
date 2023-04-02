@@ -1,9 +1,32 @@
 import { useState } from 'react';
 
-import './App.css';
+import HomePage from './chat/HomePage';
+import SideMenu from './sideNavigation/SideMenu';
+
+import AppContext, { Channels, Users } from './context/AppContext';
 
 function App() {
-  return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
+  const [user, setUser] = useState<Users>('Sam');
+  const [channel, setChannel] = useState<Channels>('General');
+  const [isMenuOpen, setIsMenuOpen] = useState(true);
+
+  return (
+    <AppContext.Provider
+      value={{
+        selectedUser: user,
+        setSelectedUser: setUser,
+        selectedChannel: channel,
+        setSelectedChannel: setChannel,
+        isMenuOpen,
+        setIsMenuOpen,
+      }}
+    >
+      <div className="flex h-screen w-screen flex-row bg-red-600">
+        <SideMenu />
+        <HomePage />
+      </div>
+    </AppContext.Provider>
+  );
 }
 
 export default App;

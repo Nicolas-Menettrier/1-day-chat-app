@@ -17,24 +17,6 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-client
-  .query({
-    query: gql`
-      query MessagesFetchLatest($channelId: ChannelId!) {
-        MessagesFetchLatest(channelId: $channelId) {
-          messageId
-          text
-          datetime
-          userId
-        }
-      }
-    `,
-    variables: {
-      channelId: 'Technology',
-    },
-  })
-  .then((result) => console.log(result.data));
-
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <ApolloProvider client={client}>
