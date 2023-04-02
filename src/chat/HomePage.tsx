@@ -1,9 +1,11 @@
 import { useContext } from 'react';
 
-import AppContext from '../context/AppContext';
+import MessagesList from './MessagesList';
+
 import ReadMore from './interaction/ReadMore';
 import SendBox from './interaction/SendBox';
-import MessagesList from './MessagesList';
+
+import AppContext from '../context/AppContext';
 
 function HomePage() {
   const { selectedChannel } = useContext(AppContext);

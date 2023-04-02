@@ -21,7 +21,7 @@ function App() {
         setIsMenuOpen,
       }}
     >
-      <div className="flex h-screen w-screen flex-row bg-red-600">
+      <div className="flex h-screen w-screen flex-row">
         <SideMenu />
         <HomePage />
       </div>

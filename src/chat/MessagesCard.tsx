@@ -7,8 +7,6 @@ interface IMessageCardProps {
 }
 
 function MessagesCard({ message, userId, datetime }: IMessageCardProps) {
-  // should display the message in a bubble chat with the time displayed bellow it
-  // + the avatar of the user who sent the message
   return (
     <div className="mb-3 flex flex-row">
       <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-900">

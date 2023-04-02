@@ -13,7 +13,7 @@ export type Users = 'Sam' | 'Russell' | 'Joyse';
 export type Channels = 'General' | 'Technology' | 'LGTM';
 
 export const USER_LIST: Array<{
-  name: Exclude<Users, undefined>;
+  name: Users;
   avatar: string;
 }> = [
   {
@@ -33,29 +33,13 @@ export const USER_LIST: Array<{
   },
 ];
 
-export const USER_MAP: Record<
-  Exclude<Users, undefined>,
-  { name: Users; avatar: string }
-> = {
-  Sam: {
-    name: 'Sam',
-    avatar: USER_LIST[0].avatar,
-  },
-  Russell: {
-    name: 'Russell',
-    avatar: USER_LIST[1].avatar,
-  },
-  Joyse: {
-    name: 'Joyse',
-    avatar: USER_LIST[2].avatar,
-  },
-};
+export const USER_MAP: Record<Users, { name: Users; avatar: string }> =
+  USER_LIST.reduce((acc, user) => {
+    acc[user.name] = user;
+    return acc;
+  }, {} as Record<Users, { name: Users; avatar: string }>);
 
-export const CHANNEL_LIST: Array<Exclude<Channels, undefined>> = [
-  'General',
-  'Technology',
-  'LGTM',
-];
+export const CHANNEL_LIST: Array<Channels> = ['General', 'Technology', 'LGTM'];
 
 export const defaultAppContextValue: IAppContext = {
   selectedUser: 'Sam',
