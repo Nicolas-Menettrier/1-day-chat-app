@@ -14,12 +14,12 @@ function HomePage() {
         {selectedChannel}
       </div>
       <hr />
-      <div className="flex h-full w-full flex-col p-4">
-        <ReadMore />
+      <ReadMore />
+      <div className="flex h-full w-full flex-col overflow-x-hidden overflow-y-scroll p-4">
         <MessagesList />
-        <ReadMore />
       </div>
-      <div className="flex w-full flex-col p-4">
+      <ReadMore />
+      <div className="flex h-60 w-full flex-col p-4">
         <SendBox />
       </div>
     </div>
