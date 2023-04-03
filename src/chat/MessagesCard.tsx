@@ -25,7 +25,7 @@ function MessagesCard({ message, userId, datetime }: IMessageCardProps) {
             isCurrentUser ? 'mr-2 bg-blue-500' : 'ml-2 bg-gray-400'
           }`}
         >
-          <div className=" whitespace-pre-wrap text-sm text-white">
+          <div className="whitespace-pre-wrap text-sm text-white">
             {message}
           </div>
         </div>

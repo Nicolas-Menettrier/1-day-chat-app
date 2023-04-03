@@ -60,7 +60,9 @@ function ErrorMessageCard({
           disabled={loading}
           title="Resend?"
         >
-          <span className="text-sm text-gray-700">{errorMessage.text}</span>
+          <span className="whitespace-pre-wrap text-sm text-gray-700">
+            {errorMessage.text}
+          </span>
         </button>
       </div>
       <Avatar user={errorMessage.userId} />
