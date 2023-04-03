@@ -1,7 +1,8 @@
 import { useContext, useMemo } from 'react';
 
-import AppContext, { User } from '../context/AppContext';
 import Avatar from './Avatar';
+
+import AppContext, { User } from '../context/AppContext';
 
 interface IMessageCardProps {
   message: string;

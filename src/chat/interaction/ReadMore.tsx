@@ -28,7 +28,7 @@ function ReadMore({ old, messageId, channel }: IReadMoreProps) {
     },
   });
 
-  const handleClick = () => {
+  function handleClick() {
     fetchMoreMessages({
       variables: {
         channelId: channel,
@@ -36,7 +36,7 @@ function ReadMore({ old, messageId, channel }: IReadMoreProps) {
         old,
       },
     });
-  };
+  }
 
   return (
     <button

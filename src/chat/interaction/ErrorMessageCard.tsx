@@ -23,9 +23,7 @@ function ErrorMessageCard({
     update: updateCacheSendMessage(errorMessage.channelId),
   });
 
-  const handleResend = async () => {
-    if (loading) return;
-
+  async function handleResend() {
     try {
       await sendMessage({
         variables: {
@@ -36,9 +34,9 @@ function ErrorMessageCard({
       });
       removeErrorMessage(errorMessage);
     } catch (error) {
-      console.error('Error resending message:', error);
+      console.error('Error resending message:', error); // catch and do nothing
     }
-  };
+  }
 
   return (
     <div className="mb-3 flex  flex-row justify-end">

@@ -2,6 +2,7 @@ import { useContext, useState } from 'react';
 import { useMutation } from '@apollo/client';
 
 import AppContext from '../../context/AppContext';
+
 import { SEND_MESSAGE, updateCacheSendMessage } from '../query/messages.query';
 import { MessagePost, MessagePostVariables } from '../query/messages.types';
 

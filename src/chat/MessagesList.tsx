@@ -3,13 +3,14 @@ import { useContext, useMemo } from 'react';
 import { useQuery } from '@apollo/client';
 
 import MessagesCard from './MessagesCard';
+
 import ReadMore from './interaction/ReadMore';
+import ErrorMessageCard from './interaction/ErrorMessageCard';
 
 import AppContext, { Channel, ErrorMessage } from '../context/AppContext';
 
 import { Message, MessagesFetchLatest } from './query/messages.types';
 import { GET_MESSAGES } from './query/messages.query';
-import ErrorMessageCard from './interaction/ErrorMessageCard';
 
 function MessagesList() {
   const { selectedChannel, errorMessages, setErrorMessages, selectedUser } =
@@ -41,9 +42,9 @@ function MessagesList() {
     );
   }, [errorMessages, selectedChannel, selectedUser]);
 
-  const removeErrorMessage = (message: ErrorMessage) => {
+  function removeErrorMessage(message: ErrorMessage) {
     setErrorMessages(errorMessages.filter((error) => error.id !== message.id));
-  };
+  }
 
   return (
     <>

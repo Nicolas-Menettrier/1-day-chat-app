@@ -10,7 +10,7 @@ function HamburgerToggle({
   toggleMenu,
 }: IHamburgerToggleProps): JSX.Element {
   useEffect(() => {
-    const handleResize = () => {
+    function handleResize() {
       if (window.innerWidth < 768 && isMenuOpen) {
         toggleMenu();
       }
@@ -18,7 +18,7 @@ function HamburgerToggle({
       if (window.innerWidth >= 768 && !isMenuOpen) {
         toggleMenu();
       }
-    };
+    }
 
     window.addEventListener('resize', handleResize);
 
