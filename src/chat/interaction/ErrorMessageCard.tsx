@@ -55,7 +55,7 @@ function ErrorMessageCard({
             loading
               ? 'border-gray-600 bg-gray-300'
               : 'border-red-600 bg-red-300'
-          } flex w-fit cursor-pointer flex-row rounded-md border   px-3 py-2`}
+          } flex w-fit max-w-sm cursor-pointer flex-row rounded-md border px-3 py-2 text-left`}
           onClick={handleResend}
           disabled={loading}
           title="Resend?"
