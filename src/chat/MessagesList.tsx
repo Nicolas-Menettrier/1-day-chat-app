@@ -1,18 +1,19 @@
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 
 import { useQuery } from '@apollo/client';
 
-import AppContext, { Channels } from '../context/AppContext';
-
-import {
-  GET_MESSAGES,
-  Message,
-  MessagesFetchLatest,
-} from './query/messages.query';
 import MessagesCard from './MessagesCard';
+import ReadMore from './interaction/ReadMore';
+
+import AppContext, { Channel, ErrorMessage } from '../context/AppContext';
+
+import { Message, MessagesFetchLatest } from './query/messages.types';
+import { GET_MESSAGES } from './query/messages.query';
+import ErrorMessageCard from './interaction/ErrorMessageCard';
 
 function MessagesList() {
-  const { selectedChannel } = useContext(AppContext);
+  const { selectedChannel, errorMessages, setErrorMessages, selectedUser } =
+    useContext(AppContext);
   const {
     loading,
     error,
@@ -20,11 +21,29 @@ function MessagesList() {
   } = useQuery<
     MessagesFetchLatest,
     {
-      channelId: Channels;
+      channelId: Channel;
     }
   >(GET_MESSAGES, {
     variables: { channelId: selectedChannel },
   });
+
+  const reversedMessages = useMemo(() => {
+    if (messages) {
+      return [...messages.MessagesFetchLatest].reverse();
+    }
+    return [];
+  }, [messages]);
+
+  const userErrorMessages = useMemo(() => {
+    return errorMessages.filter(
+      (message) =>
+        message.channelId === selectedChannel && message.userId === selectedUser
+    );
+  }, [errorMessages, selectedChannel, selectedUser]);
+
+  const removeErrorMessage = (message: ErrorMessage) => {
+    setErrorMessages(errorMessages.filter((error) => error.id !== message.id));
+  };
 
   return (
     <>
@@ -32,15 +51,35 @@ function MessagesList() {
         <p>Loading...</p>
       ) : error ? (
         <p>Error :(</p>
-      ) : (
-        messages?.MessagesFetchLatest.map((message: Message) => (
-          <MessagesCard
-            key={message.messageId}
-            message={message.text}
-            userId={message.userId}
-            datetime={message.datetime}
+      ) : reversedMessages.length > 0 ? (
+        <>
+          <ReadMore
+            old
+            messageId={reversedMessages[0].messageId}
+            channel={selectedChannel}
           />
-        ))
+          {reversedMessages.map((message: Message) => (
+            <MessagesCard
+              key={message.messageId}
+              message={message.text}
+              userId={message.userId}
+              datetime={message.datetime}
+            />
+          ))}
+          {userErrorMessages.map((message) => (
+            <ErrorMessageCard
+              errorMessage={message}
+              removeErrorMessage={removeErrorMessage}
+            />
+          ))}
+          <ReadMore
+            old={false}
+            messageId={reversedMessages[reversedMessages.length - 1].messageId}
+            channel={selectedChannel}
+          />
+        </>
+      ) : (
+        <>no data</>
       )}
     </>
   );

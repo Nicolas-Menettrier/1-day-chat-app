@@ -1,19 +1,28 @@
 import { createContext } from 'react';
 
+import { Message } from '../chat/query/messages.types';
+
+export type ErrorMessage = Omit<Message, 'messageId' | 'datetime'> & {
+  channelId: Channel;
+  id: string;
+};
+
 interface IAppContext {
-  selectedUser: Users;
-  setSelectedUser: (user: Users) => void;
-  selectedChannel: Channels;
-  setSelectedChannel: (channel: Channels) => void;
+  selectedUser: User;
+  setSelectedUser: (user: User) => void;
+  selectedChannel: Channel;
+  setSelectedChannel: (channel: Channel) => void;
   setIsMenuOpen: (isMenuOpen: boolean) => void;
   isMenuOpen: boolean;
+  errorMessages: Array<ErrorMessage>;
+  setErrorMessages: (errorMessages: Array<ErrorMessage>) => void;
 }
 
-export type Users = 'Sam' | 'Russell' | 'Joyse';
-export type Channels = 'General' | 'Technology' | 'LGTM';
+export type User = 'Sam' | 'Russell' | 'Joyse';
+export type Channel = 'General' | 'Technology' | 'LGTM';
 
 export const USER_LIST: Array<{
-  name: Users;
+  name: User;
   avatar: string;
 }> = [
   {
@@ -33,13 +42,13 @@ export const USER_LIST: Array<{
   },
 ];
 
-export const USER_MAP: Record<Users, { name: Users; avatar: string }> =
+export const USER_MAP: Record<User, { name: User; avatar: string }> =
   USER_LIST.reduce((acc, user) => {
     acc[user.name] = user;
     return acc;
-  }, {} as Record<Users, { name: Users; avatar: string }>);
+  }, {} as Record<User, { name: User; avatar: string }>);
 
-export const CHANNEL_LIST: Array<Channels> = ['General', 'Technology', 'LGTM'];
+export const CHANNEL_LIST: Array<Channel> = ['General', 'Technology', 'LGTM'];
 
 export const defaultAppContextValue: IAppContext = {
   selectedUser: 'Sam',
@@ -48,6 +57,8 @@ export const defaultAppContextValue: IAppContext = {
   setSelectedChannel: () => {},
   isMenuOpen: false,
   setIsMenuOpen: () => {},
+  errorMessages: [],
+  setErrorMessages: () => {},
 };
 
 const AppContext = createContext(defaultAppContextValue);

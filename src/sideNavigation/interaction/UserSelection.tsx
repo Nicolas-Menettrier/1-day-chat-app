@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 
 import AppContext, {
-  Users,
+  User,
   USER_LIST,
   USER_MAP,
 } from '../../context/AppContext';
@@ -10,7 +10,7 @@ function UserSelection() {
   const { selectedUser, setSelectedUser, isMenuOpen } = useContext(AppContext);
 
   function handleUserSelection(e: React.ChangeEvent<HTMLSelectElement>) {
-    setSelectedUser(e.target.value as Users);
+    setSelectedUser(e.target.value as User);
   }
 
   return (
@@ -38,6 +38,7 @@ function UserSelection() {
           <span className="h-16 w-16 p-2">
             <img
               src={USER_MAP[selectedUser].avatar}
+              title={selectedUser}
               className="cursor-pointer rounded-md transition-transform duration-300 ease-in-out hover:scale-110"
             />
           </span>

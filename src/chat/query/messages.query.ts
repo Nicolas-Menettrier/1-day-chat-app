@@ -1,17 +1,17 @@
-import { gql } from '@apollo/client';
+import {
+  ApolloCache,
+  DefaultContext,
+  gql,
+  MutationUpdaterFunction,
+} from '@apollo/client';
 
-import { Channels, Users } from '../../context/AppContext';
-
-export type Message = {
-  messageId: string;
-  text: string;
-  userId: Users;
-  datetime: string;
-};
-
-export type MessagesFetchLatest = {
-  MessagesFetchLatest: Message[];
-};
+import { Channel } from '../../context/AppContext';
+import {
+  MessagePost,
+  MessagePostVariables,
+  MessagesFetchLatest,
+  MessagesFetchMore,
+} from './messages.types';
 
 export const GET_MESSAGES = gql`
   query LatestMessages($channelId: ChannelId!) {
@@ -23,21 +23,6 @@ export const GET_MESSAGES = gql`
     }
   }
 `;
-
-export type MessagePost = {
-  MessagePost: {
-    text: string;
-    messageId: string;
-    datetime: string;
-    userId: Users;
-  };
-};
-
-export type MessagePostVariables = {
-  channelId: Channels;
-  text: string;
-  userId: Users;
-};
 
 export const SEND_MESSAGE = gql`
   mutation MessagePost(
@@ -53,3 +38,73 @@ export const SEND_MESSAGE = gql`
     }
   }
 `;
+
+export const FETCH_MORE_MESSAGES = gql`
+  query MessagesFetchMore(
+    $channelId: ChannelId!
+    $messageId: String!
+    $old: Boolean!
+  ) {
+    MessagesFetchMore(channelId: $channelId, messageId: $messageId, old: $old) {
+      messageId
+      text
+      userId
+      datetime
+    }
+  }
+`;
+
+export const updateCacheSendMessage =
+  (
+    selectedChannel: Channel
+  ): MutationUpdaterFunction<
+    MessagePost,
+    MessagePostVariables,
+    DefaultContext,
+    ApolloCache<any>
+  > =>
+  (cache, { data }) => {
+    const cacheData = cache.readQuery<MessagesFetchLatest>({
+      query: GET_MESSAGES,
+      variables: { channelId: selectedChannel },
+    });
+
+    cache.writeQuery({
+      query: GET_MESSAGES,
+      variables: { channelId: selectedChannel },
+      data: {
+        MessagesFetchLatest: [
+          data?.MessagePost,
+          ...(cacheData?.MessagesFetchLatest || []),
+        ],
+      },
+    });
+  };
+
+export const updateCacheFetchMoreMessages = (
+  selectedChannel: Channel,
+  old: boolean,
+  cache: ApolloCache<any>,
+  messages: MessagesFetchMore
+) => {
+  const cacheData = cache.readQuery<MessagesFetchLatest>({
+    query: GET_MESSAGES,
+    variables: { channelId: selectedChannel },
+  });
+
+  cache.writeQuery({
+    query: GET_MESSAGES,
+    variables: { channelId: selectedChannel },
+    data: {
+      MessagesFetchLatest: old
+        ? [
+            ...(cacheData?.MessagesFetchLatest || []),
+            ...(messages?.MessagesFetchMore || []),
+          ]
+        : [
+            ...(messages?.MessagesFetchMore || []),
+            ...(cacheData?.MessagesFetchLatest || []),
+          ],
+    },
+  });
+};

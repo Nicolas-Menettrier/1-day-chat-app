@@ -1,26 +1,44 @@
-import { Users } from '../context/AppContext';
+import { useContext, useMemo } from 'react';
+
+import AppContext, { User } from '../context/AppContext';
+import Avatar from './Avatar';
 
 interface IMessageCardProps {
   message: string;
-  userId: Users;
+  userId: User;
   datetime: string;
 }
 
 function MessagesCard({ message, userId, datetime }: IMessageCardProps) {
+  const { selectedUser } = useContext(AppContext);
+  const isCurrentUser = useMemo(() => {
+    return selectedUser === userId;
+  }, [selectedUser, userId]);
+
   return (
-    <div className="mb-3 flex flex-row">
-      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-900">
-        <span className="text-xl font-bold text-white">{userId[0]}</span>
-      </div>
-      <div className="ml-2 flex flex-col">
+    <div className={`mb-3 flex flex-row ${isCurrentUser ? 'justify-end' : ''}`}>
+      {!isCurrentUser && <Avatar user={userId} />}
+      <div className={`flex flex-col ${isCurrentUser ? 'items-end' : ''}`}>
+        <div
+          className={`flex w-fit max-w-sm flex-row rounded-md px-3 py-2 ${
+            isCurrentUser ? 'mr-2 bg-blue-500' : 'ml-2 bg-gray-400'
+          }`}
+        >
+          <div className=" whitespace-pre-wrap text-sm text-white">
+            {message}
+          </div>
+        </div>
         <div className="flex flex-row">
-          <span className="text-sm font-bold text-gray-700">{userId}</span>
-          <span className="ml-2 text-sm text-gray-500">{datetime}</span>
-        </div>
-        <div className="flex flex-row rounded-md bg-red-300 px-3 py-2">
-          <span className="text-sm text-gray-700">{message}</span>
+          <span
+            className={`${
+              isCurrentUser ? 'mr-2' : 'ml-2'
+            } text-sm text-gray-500`}
+          >
+            {new Date(datetime).toLocaleString()}
+          </span>
         </div>
       </div>
+      {isCurrentUser && <Avatar user={userId} />}
     </div>
   );
 }

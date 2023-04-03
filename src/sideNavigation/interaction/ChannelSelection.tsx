@@ -31,7 +31,10 @@ function ChannelSelection() {
         </>
       ) : (
         <div className="flex h-16 w-16  p-2">
-          <span className="flex h-full w-full cursor-pointer items-center justify-center rounded-md bg-gray-300 text-3xl font-bold text-gray-600 transition-transform duration-300 ease-in-out hover:scale-110">
+          <span
+            title={selectedChannel}
+            className="flex h-full w-full cursor-pointer items-center justify-center rounded-md bg-gray-300 text-3xl font-bold text-gray-600 transition-transform duration-300 ease-in-out hover:scale-110"
+          >
             {selectedChannel.charAt(0).toUpperCase()}
           </span>
         </div>

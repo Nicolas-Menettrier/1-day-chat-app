@@ -11,15 +11,15 @@ function SideMenu(): JSX.Element {
 
   return (
     <aside
-      className={`top transition-width flex h-screen w-16 flex-col gap-2 bg-white  duration-300 ease-in-out ${
+      className={`top transition-width flex h-screen w-16 flex-col  bg-white  duration-300 ease-in-out ${
         !isMenuOpen
           ? 'w-16 sm:w-16 md:w-16 lg:w-16'
           : 'w-64 sm:w-64 md:w-64 lg:w-64'
       }`}
     >
       <span
-        className={`mt-4 flex h-14 items-center gap-4 p-2 ${
-          !isMenuOpen ? 'justify-center' : ''
+        className={`flex h-16 items-center gap-2  ${
+          !isMenuOpen ? 'justify-center' : 'pl-2'
         }`}
       >
         <HamburgerToggle
