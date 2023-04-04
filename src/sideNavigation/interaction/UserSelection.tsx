@@ -20,7 +20,9 @@ function UserSelection() {
         <h2 className="text-1xl p-2 font-semibold">1. Choose your user</h2>
       )}
       <div
-        className={`flex flex-row flex-wrap gap-2 ${isMenuOpen ? 'p-2' : ''}`}
+        className={`flex flex-row flex-wrap items-center gap-2 ${
+          isMenuOpen ? 'p-2' : ''
+        }`}
       >
         {isMenuOpen ? (
           <>
