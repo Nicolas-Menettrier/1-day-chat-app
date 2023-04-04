@@ -29,7 +29,7 @@ function SideMenu(): JSX.Element {
         {isMenuOpen && <h1 className="text-xl font-bold">Chat</h1>}
       </span>
       <hr />
-      <ul className={isMenuOpen ? 'p-2' : ''}>
+      <ul>
         <li>
           <UserSelection />
         </li>

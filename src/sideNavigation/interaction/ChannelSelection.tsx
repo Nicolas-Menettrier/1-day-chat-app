@@ -10,21 +10,26 @@ function ChannelSelection() {
     <>
       {isMenuOpen ? (
         <>
-          <h2 className="text-1xl font-semibold">2. Choose your channel</h2>
-          <ul className="flex flex-col gap-2">
+          <h2 className="text-1xl ml-2 font-semibold">
+            2. Choose your channel
+          </h2>
+          <ul className="mt-2 flex flex-col">
             <li>
               {CHANNEL_LIST.map((channel) => (
-                <button
-                  key={channel}
-                  className={`mt-1 w-full p-2 text-left ${
-                    selectedChannel === channel
-                      ? 'bg-gray-200'
-                      : 'hover:bg-gray-100'
-                  } rounded-md transition-all duration-300 ease-in-out`}
-                  onClick={() => setSelectedChannel(channel)}
-                >
-                  <span>{channel} Channel</span>
-                </button>
+                <>
+                  <button
+                    key={channel}
+                    className={`w-full p-2 text-left ${
+                      selectedChannel === channel
+                        ? 'bg-gray-200'
+                        : 'hover:bg-gray-100'
+                    } transition-all duration-300 ease-in-out`}
+                    onClick={() => setSelectedChannel(channel)}
+                  >
+                    <span>{channel} Channel</span>
+                  </button>
+                  <hr />
+                </>
               ))}
             </li>
           </ul>

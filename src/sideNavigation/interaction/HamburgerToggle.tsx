@@ -20,12 +20,13 @@ function HamburgerToggle({
       }
     }
 
+    handleResize();
     window.addEventListener('resize', handleResize);
 
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  });
+  }, []);
 
   return (
     <button className="h-32px w-32px relative" onClick={toggleMenu}>

@@ -35,7 +35,7 @@ function MessagesCard({ message, userId, datetime }: IMessageCardProps) {
               isCurrentUser ? 'mr-2' : 'ml-2'
             } text-sm text-gray-500`}
           >
-            {new Date(datetime).toLocaleString()}
+            Sent at {new Date(datetime).toLocaleTimeString()}
           </span>
         </div>
       </div>
